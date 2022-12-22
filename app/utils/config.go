@@ -41,10 +41,10 @@ func NewConfigurations(logger *zap.Logger) *Configurations {
 
 	viper.SetDefault("SERVER_ADDRESS", "0.0.0.0:9000")
 	viper.SetDefault("DB_HOST", "localhost")
-	viper.SetDefault("DB_NAME", "postgres")
+	viper.SetDefault("DB_NAME", "test")
 	viper.SetDefault("DB_USER", "postgres")
 	viper.SetDefault("DB_PASSWORD", "postgres")
-	viper.SetDefault("DB_PORT", "5432")
+	viper.SetDefault("DB_PORT", "5455")
 	viper.SetDefault("ACCESS_TOKEN_PRIVATE_KEY_PATH", "")
 	viper.SetDefault("ACCESS_TOKEN_PUBLIC_KEY_PATH", "")
 	viper.SetDefault("REFRESH_TOKEN_PRIVATE_KEY_PATH", "")

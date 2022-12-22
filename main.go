@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/caseyrwebb/auth-microservice/app"
+	"github.com/caseyrwebb/auth-microservice/app/data"
 	"github.com/caseyrwebb/auth-microservice/app/utils"
 	"go.uber.org/zap"
 )
@@ -22,6 +23,15 @@ func main() {
 	configs := utils.NewConfigurations(logger)
 
 	app := app.New()
+	app.DB = &data.DB{}
+	app.DB.SetDBLogger(logger)
+	err := app.DB.Open(configs)
+	if err != nil {
+		logger.Error(fmt.Sprintf("%s %s %s", "could not connect to the database", "error", err))
+		os.Exit(1)
+	}
+
+	defer app.DB.Close()
 
 	svr := http.Server{
 		Addr:         configs.ServerAddress,
