@@ -23,18 +23,16 @@ type AuthHandler struct {
 	logger      zap.Logger
 	configs     *utils.Configurations
 	validator   *data.Validation
-	repo        data.Repository
 	authService services.Authentication
 	mailService services.MailService
 }
 
 // NewUserHandler returns a new UserHandler instance
-func NewAuthHandler(l zap.Logger, c *utils.Configurations, v *data.Validation, r data.Repository, auth services.Authentication, mail services.MailService) *AuthHandler {
+func NewAuthHandler(l zap.Logger, c *utils.Configurations, v *data.Validation, auth services.Authentication, mail services.MailService) *AuthHandler {
 	return &AuthHandler{
 		logger:      l,
 		configs:     c,
 		validator:   v,
-		repo:        r,
 		authService: auth,
 		mailService: mail,
 	}
@@ -69,14 +67,14 @@ type UsernameUpdate struct {
 }
 
 type CodeVerificationReq struct {
-	Code string `json: "code"`
-	Type string `json" "type"`
+	Code string `json:"code"`
+	Type string `json:"type"`
 }
 
 type PasswordResetReq struct {
-	Password   string `json: "password"`
-	PasswordRe string `json: "password_re"`
-	Code       string `json: "code"`
+	Password   string `json:"password"`
+	PasswordRe string `json:"password_re"`
+	Code       string `json:"code"`
 }
 
 var ErrUserAlreadyExists = fmt.Sprintf("User already exists with the given email")

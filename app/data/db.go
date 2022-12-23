@@ -1,8 +1,10 @@
 package data
 
 import (
+	"context"
 	"fmt"
 
+	"github.com/caseyrwebb/auth-microservice/app/models"
 	"github.com/caseyrwebb/auth-microservice/app/utils"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -10,12 +12,22 @@ import (
 )
 
 type AuthDB interface {
+	Create(ctx context.Context, user *models.User) error
+	GetUserByEmail(ctx context.Context, email string) (*models.User, error)
+	GetUserByID(ctx context.Context, userID string) (*models.User, error)
+	UpdateUsername(ctx context.Context, user *models.User) error
+	UpdateUserVerificationStatus(ctx context.Context, email string, status bool) error
+	StoreVerificationData(ctx context.Context, verificationData *models.VerificationData) error
+	GetVerificationData(ctx context.Context, email string, verificationDataType models.VerificationDataType) (*models.VerificationData, error)
+	DeleteVerificationData(ctx context.Context, email string, verificationDataType models.VerificationDataType) error
+	UpdatePassword(ctx context.Context, userID string, password string, tokenHash string) error
 }
 
 type GoDB interface {
 	AuthDB
-	Open() error
+	Open(config *utils.Configurations) error
 	Close() error
+	SetDBLogger(logger *zap.Logger)
 }
 
 type DB struct {

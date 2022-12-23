@@ -7,7 +7,7 @@ import (
 
 type App struct {
 	Router *mux.Router
-	DB     *data.DB
+	DB     data.GoDB
 }
 
 func New() *App {
