@@ -16,7 +16,7 @@ func (d *DB) Create(ctx context.Context, user *models.User) error {
 	user.UpdatedAt = time.Now()
 
 	d.logger.Info(fmt.Sprintf("%s %v", "creating user", user))
-	query := "insert into users (id, email, username, password, tokenhash, createdat, updatedat) values ($1, $2, $3, $4, $5, $6, $7)"
+	query := "insert into users (id, email, username, password, token, created_at, updated_at) values ($1, $2, $3, $4, $5, $6, $7)"
 	_, err := d.db.ExecContext(ctx, query, user.ID, user.Email, user.Username, user.Password, user.Token, user.CreatedAt, user.UpdatedAt)
 	return err
 }

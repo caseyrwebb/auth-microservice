@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"fmt"
-
 	"github.com/caseyrwebb/auth-microservice/app/data"
 	"github.com/caseyrwebb/auth-microservice/app/services"
 	"github.com/caseyrwebb/auth-microservice/app/utils"
@@ -25,16 +23,18 @@ type AuthHandler struct {
 	validator   *data.Validation
 	authService services.Authentication
 	mailService services.MailService
+	db          data.GoDB
 }
 
 // NewUserHandler returns a new UserHandler instance
-func NewAuthHandler(l zap.Logger, c *utils.Configurations, v *data.Validation, auth services.Authentication, mail services.MailService) *AuthHandler {
+func NewAuthHandler(d data.GoDB, l zap.Logger, c *utils.Configurations, v *data.Validation, auth services.Authentication, mail services.MailService) *AuthHandler {
 	return &AuthHandler{
 		logger:      l,
 		configs:     c,
 		validator:   v,
 		authService: auth,
 		mailService: mail,
+		db:          d,
 	}
 }
 
@@ -77,9 +77,9 @@ type PasswordResetReq struct {
 	Code       string `json:"code"`
 }
 
-var ErrUserAlreadyExists = fmt.Sprintf("User already exists with the given email")
-var ErrUserNotFound = fmt.Sprintf("No user account exists with given email. Please sign in first")
-var UserCreationFailed = fmt.Sprintf("Unable to create user.Please try again later")
+var ErrUserAlreadyExists = "User already exists with the given email"
+var ErrUserNotFound = "No user account exists with given email. Please sign in first"
+var UserCreationFailed = "Unable to create user.Please try again later"
 
 var PgDuplicateKeyMsg = "duplicate key value violates unique constraint"
 var PgNoRowsMsg = "no rows in result set"

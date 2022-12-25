@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/caseyrwebb/auth-microservice/app"
-	"github.com/caseyrwebb/auth-microservice/app/data"
 	"github.com/caseyrwebb/auth-microservice/app/utils"
 	"go.uber.org/zap"
 )
@@ -22,8 +21,7 @@ func main() {
 
 	configs := utils.NewConfigurations(logger)
 
-	app := app.New()
-	app.DB = &data.DB{}
+	app := app.New(*logger, configs)
 	app.DB.SetDBLogger(logger)
 	err := app.DB.Open(configs)
 	if err != nil {
