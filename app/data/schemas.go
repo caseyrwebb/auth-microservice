@@ -8,6 +8,7 @@ create table if not exists users (
 	username varchar(225),
 	password varchar(225) not null,
 	token varchar(15) not null,
+	is_verified boolean default false,
 	created_at timestamp not null,
 	updated_at timestamp not null,
 	primary key (id)

@@ -130,12 +130,12 @@ func (ah *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !user.IsVerified {
-		ah.logger.Error("unverified user")
-		w.WriteHeader(http.StatusUnauthorized)
-		data.ToJSON(&GenericResponse{Status: false, Message: "Please verify your mail address before login"}, w)
-		return
-	}
+	// if !user.IsVerified {
+	// 	ah.logger.Error("unverified user")
+	// 	w.WriteHeader(http.StatusUnauthorized)
+	// 	data.ToJSON(&GenericResponse{Status: false, Message: "Please verify your mail address before login"}, w)
+	// 	return
+	// }
 
 	if valid := ah.authService.Authenticate(&reqUser, user); !valid {
 		ah.logger.Debug("Authetication of user failed")

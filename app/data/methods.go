@@ -96,7 +96,7 @@ func (d *DB) DeleteVerificationData(ctx context.Context, email string, verificat
 // UpdatePassword updates the user password
 func (d *DB) UpdatePassword(ctx context.Context, userID string, password string, tokenHash string) error {
 
-	query := "update users set password = $1, tokenhash = $2 where id = $3"
+	query := "update users set password = $1, token = $2 where id = $3"
 	_, err := d.db.ExecContext(ctx, query, password, tokenHash, userID)
 	return err
 }

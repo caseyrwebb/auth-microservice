@@ -73,7 +73,7 @@ func (auth *AuthService) GenerateRefreshToken(user *models.User) (string, error)
 		cusKey,
 		tokenType,
 		jwt.StandardClaims{
-			Issuer: "bookite.auth.service",
+			Issuer: "auth.microservice",
 		},
 	}
 
