@@ -31,8 +31,16 @@ type Configurations struct {
 
 // NewConfigurations returns a new Configuration object
 func NewConfigurations(logger *zap.Logger) *Configurations {
+	viper.AddConfigPath(".")
+	viper.SetConfigName("app")
+	viper.SetConfigType("env")
 
 	viper.AutomaticEnv()
+
+	err := viper.ReadInConfig()
+	if err != nil {
+		logger.Error(fmt.Sprintf("%s %v", "cannot load config:", err))
+	}
 
 	dbURL := viper.GetString("DATABASE_URL")
 	conn, _ := pq.ParseURL(dbURL)
